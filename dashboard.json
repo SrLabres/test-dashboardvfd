@@ -1,0 +1,237 @@
+{
+    "_id": {
+      "$oid": "63f781a6ccd0dc8490276042"
+    },
+    "id": "home",
+    "title": "Visão Geral",
+    "datasources": [
+      {
+        "id": "1",
+        "type": "postgresql",
+        "parameters": {
+          "host": "172.25.20.14",
+          "port": 5432,
+          "user": "grafana",
+          "password": "8\\?htqlDUVH&$:J.",
+          "database": "gvmd"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "type": "multi-check-box",
+        "name": "groups",
+        "label": "Grupos",
+        "datasource": "1",
+        "query": "select value from tags where tags.resource_type = 'task'"
+      },
+      {
+        "type": "multi-check-box",
+        "name": "hosts",
+        "label": "Hosts",
+        "datasource": "1",
+        "query": "SELECT hosts.name as value FROM hosts LEFT JOIN public.tag_resources ON hosts.uuid = tag_resources.resource_uuid LEFT JOIN public.tags ON tag_resources.tag = tags.id WHERE tags.resource_type = 'host' AND tags.value in ($groups)"
+      },
+      {
+        "type": "date-interval",
+        "name": "intervalo",
+        "label": "Período"
+      }
+    ],
+    "components": [
+      {
+        "id": 1,
+        "type": "indicator",
+        "name": "totals",
+        "title": "Ativos Monitorados",
+        "value": 5,
+        "gridPosition": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          }
+         },
+      {
+        "id": 2,
+        "type": "indicator",
+        "name": "totals",
+        "title": "Ativos Monitorados",
+        "datasource": "1",
+        "gridPosition": {
+            "x": 1,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+        "query": "select count(*) as value from hosts h left join tag_resources tr on tr.resource_uuid = h.uuid and tr.resource_type = 'host' left join tags t on t.id = tr.tag where h.name in ($hosts) and t.value in ($groups)"
+      }
+    ],
+    "layout": {
+      "rows": [
+        {
+          "cells": [
+            {
+              "col": {
+                "xxl": 1,
+                "xl": 2,
+                "lg": 3,
+                "md": 3,
+                "sm": 12,
+                "xs": 12
+              },
+              "height": 500,
+              "components": [
+                "totals"
+              ]
+            },
+            {
+              "col": {
+                "xxl": 1,
+                "xl": 2,
+                "lg": 3,
+                "md": 3,
+                "sm": 4,
+                "xs": 12
+              },
+              "height": 500,
+              "components": [
+                "tipos_vulnerabilidade"
+              ],
+              "style": {
+                "paddingRight": 0
+              },
+              "cardStyle": {
+                "borderRight": 0,
+                "borderTopRightRadius": 0,
+                "borderBottomRightRadius": 0
+              }
+            },
+            {
+              "col": {
+                "xxl": 1,
+                "xl": 2,
+                "lg": 3,
+                "md": 3,
+                "sm": 4,
+                "xs": 12
+              },
+              "height": 500,
+              "components": [
+                "legenda_criticidade"
+              ],
+              "style": {
+                "paddingRight": 0,
+                "paddingLeft": 0
+              },
+              "cardStyle": {
+                "borderLeft": "0px none",
+                "borderRight": "0px none",
+                "borderTopRightRadius": 0,
+                "borderBottomRightRadius": 0,
+                "borderTopLeftRadius": 0,
+                "borderBottomLeftRadius": 0
+              }
+            },
+            {
+              "col": {
+                "xxl": 1,
+                "xl": 2,
+                "lg": 3,
+                "md": 3,
+                "sm": 4,
+                "xs": 12
+              },
+              "height": 500,
+              "components": [
+                "total_vulnerabilidades"
+              ],
+              "style": {
+                "paddingLeft": 0
+              },
+              "cardStyle": {
+                "borderLeft": "0px none",
+                "borderTopLeftRadius": 0,
+                "borderBottomLeftRadius": 0
+              }
+            },
+            {
+              "col": {
+                "xxl": 1,
+                "xl": 2,
+                "lg": 6,
+                "md": 6,
+                "sm": 6
+              },
+              "height": 500,
+              "components": [
+                "observabilidade"
+              ]
+            },
+            {
+              "col": {
+                "xxl": 1,
+                "xl": 2,
+                "lg": 6,
+                "md": 6,
+                "sm": 6
+              },
+              "height": 500,
+              "components": [
+                "score_exposicao"
+              ]
+            },
+            {
+              "col": {
+                "xl": 6,
+                "lg": 12
+              },
+              "height": 500,
+              "components": [
+                {
+                  "name": "maingroups",
+                  "height": 300
+                }
+              ]
+            },
+            {
+              "col": {
+                "xl": 6,
+                "lg": 12
+              },
+              "height": 500,
+              "components": [
+                {
+                  "name": "history",
+                  "height": 300
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "col": "12",
+              "height": 500,
+              "components": [
+                "maingroups_table"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "active": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1676312411339"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1676312411339"
+      }
+    },
+    "__v": 0
+  }
