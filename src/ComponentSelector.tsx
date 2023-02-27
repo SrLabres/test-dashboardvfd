@@ -1,8 +1,12 @@
-import { Indicator } from "./indicator";
+import { Indicator } from "./components/indicator";
 import React from 'react'
+import { PieChart } from "./components/pieChart";
+import BarChart from "./components/barChart";
 
 const componentMap = {
   "indicator": Indicator,
+  "pieChart": PieChart,
+  "barChart": BarChart
   // Adicionar outros tipos de componentes aqui
 }
 

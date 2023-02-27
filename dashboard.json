@@ -54,7 +54,7 @@
          },
       {
         "id": 2,
-        "type": "indicator",
+        "type": "pieChart",
         "name": "totals",
         "title": "Ativos Monitorados",
         "datasource": "1",
@@ -64,163 +64,28 @@
             "w": 1,
             "h": 1
           },
+        "value": 3,
+        "query": "select count(*) as value from hosts h left join tag_resources tr on tr.resource_uuid = h.uuid and tr.resource_type = 'host' left join tags t on t.id = tr.tag where h.name in ($hosts) and t.value in ($groups)"
+      },
+      {
+        "id": 3,
+        "type": "barChart",
+        "name": "totals",
+        "title": "Ativos Monitorados",
+        "datasource": "1",
+        "gridPosition": {
+            "x": 1,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+        "value": 3,
         "query": "select count(*) as value from hosts h left join tag_resources tr on tr.resource_uuid = h.uuid and tr.resource_type = 'host' left join tags t on t.id = tr.tag where h.name in ($hosts) and t.value in ($groups)"
       }
     ],
     "layout": {
-      "rows": [
-        {
-          "cells": [
-            {
-              "col": {
-                "xxl": 1,
-                "xl": 2,
-                "lg": 3,
-                "md": 3,
-                "sm": 12,
-                "xs": 12
-              },
-              "height": 500,
-              "components": [
-                "totals"
-              ]
-            },
-            {
-              "col": {
-                "xxl": 1,
-                "xl": 2,
-                "lg": 3,
-                "md": 3,
-                "sm": 4,
-                "xs": 12
-              },
-              "height": 500,
-              "components": [
-                "tipos_vulnerabilidade"
-              ],
-              "style": {
-                "paddingRight": 0
-              },
-              "cardStyle": {
-                "borderRight": 0,
-                "borderTopRightRadius": 0,
-                "borderBottomRightRadius": 0
-              }
-            },
-            {
-              "col": {
-                "xxl": 1,
-                "xl": 2,
-                "lg": 3,
-                "md": 3,
-                "sm": 4,
-                "xs": 12
-              },
-              "height": 500,
-              "components": [
-                "legenda_criticidade"
-              ],
-              "style": {
-                "paddingRight": 0,
-                "paddingLeft": 0
-              },
-              "cardStyle": {
-                "borderLeft": "0px none",
-                "borderRight": "0px none",
-                "borderTopRightRadius": 0,
-                "borderBottomRightRadius": 0,
-                "borderTopLeftRadius": 0,
-                "borderBottomLeftRadius": 0
-              }
-            },
-            {
-              "col": {
-                "xxl": 1,
-                "xl": 2,
-                "lg": 3,
-                "md": 3,
-                "sm": 4,
-                "xs": 12
-              },
-              "height": 500,
-              "components": [
-                "total_vulnerabilidades"
-              ],
-              "style": {
-                "paddingLeft": 0
-              },
-              "cardStyle": {
-                "borderLeft": "0px none",
-                "borderTopLeftRadius": 0,
-                "borderBottomLeftRadius": 0
-              }
-            },
-            {
-              "col": {
-                "xxl": 1,
-                "xl": 2,
-                "lg": 6,
-                "md": 6,
-                "sm": 6
-              },
-              "height": 500,
-              "components": [
-                "observabilidade"
-              ]
-            },
-            {
-              "col": {
-                "xxl": 1,
-                "xl": 2,
-                "lg": 6,
-                "md": 6,
-                "sm": 6
-              },
-              "height": 500,
-              "components": [
-                "score_exposicao"
-              ]
-            },
-            {
-              "col": {
-                "xl": 6,
-                "lg": 12
-              },
-              "height": 500,
-              "components": [
-                {
-                  "name": "maingroups",
-                  "height": 300
-                }
-              ]
-            },
-            {
-              "col": {
-                "xl": 6,
-                "lg": 12
-              },
-              "height": 500,
-              "components": [
-                {
-                  "name": "history",
-                  "height": 300
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "cells": [
-            {
-              "col": "12",
-              "height": 500,
-              "components": [
-                "maingroups_table"
-              ]
-            }
-          ]
-        }
-      ]
+      "breakpoints": { "lg": 1200, "md": 996, "sm": 768, "xs": 480, "xxs": 0 },
+      "cols":{ "lg": 12, "md": 10, "sm": 6, "xs": 4, "xxs": 2 }
     },
     "active": true,
     "createdAt": {

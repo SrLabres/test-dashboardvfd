@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import './App.css';
 import Dashboard from '../dashboard.json';
-import { Indicator } from './indicator';
+
 import { ComponentSelector } from './ComponentSelector';
-import GridLayout from 'react-grid-layout';
+import { Responsive, WidthProvider } from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import GridItem from './components/gridItem';
+
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 function App() {
   function loadDashboardData() {
@@ -54,13 +58,23 @@ function App() {
   // Renderiza o componente do dashboard com os componentes organizados em um grid
   return (
     <div className="App">
-      <GridLayout
+      <ResponsiveGridLayout
         className="layout"
-        layout={layout}
-        cols={3}
-        rowHeight={120}
-        width={1200}
-        onLayoutChange={(layout) => {
+        layouts={layout}
+        breakpoints={dashboardData.layout.breakpoints}
+        cols={dashboardData.layout.cols}
+        onDragStop={(layout) => {
+          // Atualiza a posição de cada componente no dashboard quando o layout é alterado
+          layout.forEach((item) => {
+            updateComponentLayout(item.i, {
+              x: item.x,
+              y: item.y,
+              w: item.w,
+              h: item.h,
+            });
+          });
+        }}
+        onResizeStop={(layout) => {
           // Atualiza a posição de cada componente no dashboard quando o layout é alterado
           layout.forEach((item) => {
             updateComponentLayout(item.i, {
@@ -75,16 +89,13 @@ function App() {
         {/* Renderiza cada componente do dashboard como um card */}
         {components.map((component, index) => (
           <div key={component.id} data-grid={layout[index]}>
-            <div className="card">
-              <div className="card-header"></div>
-              <div className="card-body">
                 {/* Renderiza o componente selecionado dentro do card */}
-                <ComponentSelector props={component} />
-              </div>
-            </div>
+                <GridItem>
+                  <ComponentSelector props={component} />
+                </GridItem>
           </div>
         ))}
-      </GridLayout>
+      </ResponsiveGridLayout>
     </div>
   );
 }
